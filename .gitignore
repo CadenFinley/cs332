@@ -1,0 +1,38 @@
+# macOS
+.DS_Store
+
+# VSCode settings
+.vscode/
+
+# C/C++ build files
+*.o
+*.obj
+*.so
+*.exe
+*.out
+*.a
+*.dylib
+*.dSYM/
+
+# C project build directories (if applicable)
+build/
+bin/
+
+# Python
+__pycache__/
+*.py[cod]
+*.pyo
+
+# Virtual environments for Python
+env/
+venv/
+ENV/
+env.bak/
+venv.bak/
+
+# PHP
+/vendor/
+/composer.lock
+
+# Logs and temporary files
+*.log
