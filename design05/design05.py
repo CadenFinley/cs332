@@ -1,46 +1,56 @@
 
 # caden finley
-def find_local_maximum(a, left, right):
-  
-  # T(n) = T(n/2) + O(1)
-  # runtime O(log n)
+def localMaximum(a, n=None):
+    if n is None:
+        n = len(a) - 1  # a[0] is unused
     
-    if left == right:
-        return left
+    # T(n) = T(n/2) + O(1)
+    # runtime O(log n)
     
-    if right - left == 1:
-        if a[left] > a[right]:
+    left, right = 1, n
+    
+    while left <= right:
+        if left == right:
             return left
-        else:
-            return right
-    
-    # (n/2)
-    mid = (left + right) // 2
-    is_local_max = True
+        
+        if right - left == 1:
+            if a[left] > a[right]:
+                return left
+            else:
+                return right
+        
+        # (n/2)
+        mid = (left + right) // 2
+        is_local_max = True
 
-    if mid > 1 and a[mid] <= a[mid - 1]:
-        is_local_max = False
+        if mid > 1 and a[mid] <= a[mid - 1]:
+            is_local_max = False
+        
+        if mid < n and a[mid] <= a[mid + 1]:
+            is_local_max = False
+        
+        if is_local_max:
+            return mid
+        
+        # set larger neighbor side
+        if mid > 1 and a[mid - 1] > a[mid]:
+            right = mid - 1
+        else:
+            left = mid + 1
     
-    n = len(a) - 1
-    if mid < n and a[mid] <= a[mid + 1]:
-        is_local_max = False
-    
-    if is_local_max:
-        return mid
-    
-    # 1T(n/2)
-    if mid > 1 and a[mid - 1] > a[mid]:
-        return find_local_maximum(a, left, mid - 1)
-    else:
-        return find_local_maximum(a, mid + 1, right)
+    # this cannot be reached
+    return left
 
 def main():
     file = open('local-maximum-test.txt', 'r')
-    length = int(file.readline().strip())
-    for _ in range(length):
+    k = int(file.readline().strip())
+    print(f"number of test cases: {k}")
+    for j in range(k):
         line = file.readline().strip()
-        print(f"input: {line}")
+        print(f"input  {j + 1}: {line}")
         values = list(map(int, line.split()))
+        n = values[0]  # first value is number of test values
+        test_values = values[1:n+1]
         '''
         In this localMaximum function, you MUST have the test data populating indices [1..n] and your
         solution must treat [1..n] as the valid range of values. Any solution that puts test data into index
@@ -51,10 +61,9 @@ def main():
            1   2   3   4   5   6   7   8
         
         '''
-        length = len(values)
-        a = [0] + values  # a[0] is unused a[1..n]
-        result = find_local_maximum(a, 1, length)
-        print(f"output: index: {result} value: {a[result]}")
+        a = [0] + test_values  # a[0] is unused a[1..n]
+        result = localMaximum(a, n)
+        print(f"output {j + 1}: index: {result} value: {a[result]}")
 
 if __name__ == "__main__":
     main()
