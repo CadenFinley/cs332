@@ -1,13 +1,12 @@
 
 # caden finley
-def localMaximum(a, n=None):
-    if n is None:
-        n = len(a) - 1  # a[0] is unused
+def localMaximum(a, n):
     
     # T(n) = T(n/2) + O(1)
     # runtime O(log n)
     
-    left, right = 1, n
+    left = 1
+    right = n
     
     while left <= right:
         if left == right:
@@ -38,12 +37,12 @@ def localMaximum(a, n=None):
         else:
             left = mid + 1
     
-    # this cannot be reached
+    # this will not be reached
     return left
 
 def main():
     file = open('local-maximum-test.txt', 'r')
-    k = int(file.readline().strip())
+    k = int(file.readline().strip()) # first line is number of test cases
     print(f"number of test cases: {k}")
     for j in range(k):
         line = file.readline().strip()
